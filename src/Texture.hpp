@@ -1,13 +1,16 @@
+//
+// Created by LEI XU on 4/27/19.
+//
 
 #ifndef RASTERIZER_TEXTURE_H
 #define RASTERIZER_TEXTURE_H
-
-#include "Global.hpp"
+#include "global.hpp"
 #include <eigen3/Eigen/Eigen>
 #include <opencv2/opencv.hpp>
+class Texture{
+private:
+    cv::Mat image_data;
 
-class Texture
-{
 public:
     Texture(const std::string& name)
     {
@@ -23,11 +26,9 @@ public:
     {
         auto u_img = u * width;
         auto v_img = (1 - v) * height;
-        auto color = image_data.at<cv::Vec3b>(u_img, v_img);
-        return Eigen::Vector3f(color[0], color[1], color[3]);
+        auto color = image_data.at<cv::Vec3b>(v_img, u_img);
+        return Eigen::Vector3f(color[0], color[1], color[2]);
     }
-private:
-    cv::Mat image_data;
-};
 
-#endif RASTERIZER_TEXTURE_H
+};
+#endif //RASTERIZER_TEXTURE_H
